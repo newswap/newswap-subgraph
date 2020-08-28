@@ -1,6 +1,6 @@
 import { PairHourData } from './../types/schema'
 /* eslint-disable prefer-const */
-import { BigInt, BigDecimal, store, Address } from '@graphprotocol/graph-ts'
+import { BigInt, BigDecimal, store, Address, log } from '@graphprotocol/graph-ts'
 import {
   Pair,
   Token,
@@ -231,6 +231,10 @@ export function handleSync(event: Sync): void {
 
   token0.derivedETH = findEthPerToken(token0 as Token)
   token1.derivedETH = findEthPerToken(token1 as Token)
+
+  // log.info("\n\n============LOG=======================\n\n" + token0.derivedETH.toString() + "\n\n============LOG=======================\n\n",[])
+  // log.info("\n\n============LOG=======================\n\n" + token1.derivedETH.toString() + "\n\n============LOG=======================\n\n",[])
+
   token0.save()
   token1.save()
 

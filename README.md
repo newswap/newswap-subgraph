@@ -1,3 +1,26 @@
+# Newswap Subgraph
+## 部署服务器
+- yarn
+- yarn codegen
+- yarn create-local
+- yarn deploy-local
+
+```
+Build completed: QmSczx5gbZiiBL4ANTW1nYXH8mf96XT94aTtAhF7zewtQw
+
+Deployed to http://127.0.0.1:8000/subgraphs/name/liuyong123/newswap/graphql
+
+Subgraph endpoints:
+Queries (HTTP):     http://127.0.0.1:8000/subgraphs/name/liuyong123/newswap
+Subscriptions (WS): http://127.0.0.1:8001/subgraphs/name/liuyong123/newswap
+
+本地查询devnet服务器数据：http://47.240.113.82:8000/subgraphs/name/liuyong123/newswap
+```
+
+
+
+
+
 # Uniswap V2 Subgraph
 
 [Uniswap](https://uniswap.org/) is a decentralized protocol for automated token exchange on Ethereum.
