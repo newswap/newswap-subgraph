@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { log, EthereumBlock } from '@graphprotocol/graph-ts'
+import { log, EthereumBlock, BigInt } from '@graphprotocol/graph-ts'
 import { UniswapFactory, Pair, Token, Bundle, Block } from '../types/schema'
 import { PairCreated } from '../types/Factory/Factory'
 import { Pair as PairTemplate } from '../types/templates'
@@ -27,10 +27,13 @@ export function handleNewPair(event: PairCreated): void {
     factory.txCount = ZERO_BI
     factory.mostLiquidTokens = []
 
-    // create new bundle
-    let bundle = new Bundle('1')
-    bundle.ethPrice = ZERO_BD
-    bundle.save()
+    let bundle = Bundle.load('1')
+    if (bundle == null) {
+      bundle = new Bundle('1')
+      bundle.ethPrice = ZERO_BD
+      bundle.latestTimestamp = ZERO_BI
+      bundle.save()
+    }
   }
   factory.pairCount = factory.pairCount + 1
   factory.save()
@@ -117,9 +120,23 @@ export function handleNewPair(event: PairCreated): void {
 }
 
 export function handleBlock(block: EthereumBlock): void {
-  let id = block.hash.toHex()
-  let entity = new Block(id)
-  entity.number = block.number
-  entity.timestamp = block.timestamp
-  entity.save()
+  let bundle = Bundle.load('1')
+  if (bundle == null) {
+    bundle = new Bundle('1')
+    bundle.ethPrice = ZERO_BD
+    bundle.latestTimestamp = ZERO_BI
+  }
+  let interval = block.timestamp.minus(bundle.latestTimestamp)
+  // log.info("\n\n============LOG=======================\n\nlatestTimestamp:" + interval.toString() + "\n\n============LOG=======================\n\n",[])
+  // 按1分钟间隔存储区块数据
+  if(interval.ge(BigInt.fromI32(60))) {
+    let id = block.hash.toHex()
+    let entity = new Block(id)
+    entity.number = block.number
+    entity.timestamp = block.timestamp
+    bundle.latestTimestamp = block.timestamp
+    
+    bundle.save()
+    entity.save()
+  }
 }
