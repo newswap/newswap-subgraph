@@ -1,18 +1,25 @@
 /* eslint-disable prefer-const */
 import { Pair, Token, Bundle } from '../types/schema'
 import { BigDecimal, Address, BigInt, log } from '@graphprotocol/graph-ts/index'
-import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD } from './helpers'
+import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD, fetchNewPrice } from './helpers'
 
-const WETH_ADDRESS = '0x202b1174cb34ee1b3c36747901f16e8a29031684'  //必须全部小写
+const WETH_ADDRESS = '0x2678fb6e5af58f7b520ace2cd3a4f476b771c6f2'  //必须全部小写
+
+const NewPriceInUSDAddress = '0x32f7bE067b0B557e1f5b6BD6D4D2B6d99E34f2A2' 
+const PriceSource = '0x7419553C1342f4d47C2aAf8598d1DCB993D29F55'
+
 // const USDC_WETH_PAIR = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc' // created 10008355
 // const DAI_WETH_PAIR = '0xa478c2975ab1ea89e8196811f51a7b7ade33eb11' // created block 10042267
 // const USDT_WETH_PAIR = '0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852' // created block 10093341
 
 // dummy for testing
 export function getEthPriceInUSD(): BigDecimal {
-  // fetch eth prices for each stablecoin
-  return BigDecimal.fromString('1')
+  let newPrice = fetchNewPrice(Address.fromString(NewPriceInUSDAddress), Address.fromString(PriceSource))
+  
+  return BigDecimal.fromString(newPrice.toString()).div(BigDecimal.fromString('1000000'))
+  
 
+  // return BigDecimal.fromString('1')
   // let daiPair = Pair.load(DAI_WETH_PAIR) // dai is token0
   // let usdcPair = Pair.load(USDC_WETH_PAIR) // usdc is token0
   // let usdtPair = Pair.load(USDT_WETH_PAIR) // usdt is token1
@@ -43,7 +50,7 @@ export function getEthPriceInUSD(): BigDecimal {
 
 // token where amounts should contribute to tracked volume and liquidity
 let WHITELIST: string[] = [
-  '0x202b1174cb34ee1b3c36747901f16e8a29031684', // WETH   必须全部小写
+  '0x2678fb6e5af58f7b520ace2cd3a4f476b771c6f2', // WETH   必须全部小写
   // '0x6b175474e89094c44da98b954eedeac495271d0f', // DAI
   // '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', // USDC
   // '0xdac17f958d2ee523a2206206994597c13d831ec7', // USDT

@@ -5,9 +5,10 @@ import { ERC20SymbolBytes } from '../types/Factory/ERC20SymbolBytes'
 import { ERC20NameBytes } from '../types/Factory/ERC20NameBytes'
 import { User, Bundle, Token, LiquidityPosition, LiquidityPositionSnapshot, Pair } from '../types/schema'
 import { Factory as FactoryContract } from '../types/templates/Pair/Factory'
+import { NewPriceInUSD } from '../types/templates/Pair/NewPriceInUSD'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-export const FACTORY_ADDRESS = '0x999A9b54Dc8Ac3b9E7012800DF645068fC6ae288'
+export const FACTORY_ADDRESS = '0x7F053946C99f6a17084e5aE1fd76587d43C4bb54'
 
 export let ZERO_BI = BigInt.fromI32(0)
 export let ONE_BI = BigInt.fromI32(1)
@@ -126,6 +127,17 @@ export function fetchTokenDecimals(tokenAddress: Address): BigInt {
     decimalValue = decimalResult.value
   }
   return BigInt.fromI32(decimalValue as i32)
+}
+
+export function fetchNewPrice(oracleAddress: Address, source: Address): BigInt {
+  let contract = NewPriceInUSD.bind(oracleAddress)
+  let priceValue = ZERO_BI
+  let priceResult = contract.try_getPrice(source)
+  // log.info("\n\n============LOG=======================\n\nfetchNewPrice 1:" + priceResult.value.toString() + "\n\n============LOG=======================\n\n",[])
+  if (!priceResult.reverted) {
+    priceValue = priceResult.value
+  }
+  return priceValue
 }
 
 export function createLiquidityPosition(exchange: Address, user: Address): LiquidityPosition {

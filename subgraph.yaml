@@ -7,10 +7,11 @@ dataSources:
   - kind: ethereum/contract
     name: Factory
     network: devnet
+    # dev: 0x7F053946C99f6a17084e5aE1fd76587d43C4bb54   startBlock: 13689015
     source:
-      address: '0x999A9b54Dc8Ac3b9E7012800DF645068fC6ae288'
+      address: '0x7F053946C99f6a17084e5aE1fd76587d43C4bb54'
       abi: Factory
-      startBlock: 13221500
+      startBlock: 13689015
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -53,6 +54,8 @@ templates:
           file: ./abis/pair.json
         - name: Factory
           file: ./abis/factory.json
+        - name: NewPriceInUSD
+          file: ./abis/NewPriceInUSD.json
       eventHandlers:
         - event: Mint(indexed address,uint256,uint256)
           handler: handleMint
