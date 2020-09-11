@@ -7,11 +7,11 @@ dataSources:
   - kind: ethereum/contract
     name: Factory
     network: devnet
-    # dev: 0x7F053946C99f6a17084e5aE1fd76587d43C4bb54   startBlock: 13689015
+    # dev: 0x7F053946C99f6a17084e5aE1fd76587d43C4bb54   startBlock: 13592150
     source:
       address: '0x7F053946C99f6a17084e5aE1fd76587d43C4bb54'
       abi: Factory
-      startBlock: 13689015
+      startBlock: 13592150
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
