@@ -8,7 +8,7 @@ import { Factory as FactoryContract } from '../types/templates/Pair/Factory'
 import { NewPriceInUSD } from '../types/templates/Pair/NewPriceInUSD'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-export const FACTORY_ADDRESS = '0x7F053946C99f6a17084e5aE1fd76587d43C4bb54'
+export const FACTORY_ADDRESS = '0xCe59bbCFe029789af935DFF388Fb65771e2845B2'
 
 export let ZERO_BI = BigInt.fromI32(0)
 export let ONE_BI = BigInt.fromI32(1)
