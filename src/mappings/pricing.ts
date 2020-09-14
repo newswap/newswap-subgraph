@@ -5,8 +5,11 @@ import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD, fetchNewPrice } from '.
 
 const WETH_ADDRESS = '0x2678fb6e5af58f7b520ace2cd3a4f476b771c6f2'  //必须全部小写
 
-const NewPriceInUSDAddress = '0x32f7bE067b0B557e1f5b6BD6D4D2B6d99E34f2A2' 
-const PriceSource = '0x7419553C1342f4d47C2aAf8598d1DCB993D29F55'
+// 通过NewPriceOracle获得new的价格
+const NewPriceInUSDAddress = '0x32f7bE067b0B557e1f5b6BD6D4D2B6d99E34f2A2'  //dev
+const PriceSource = '0x7419553C1342f4d47C2aAf8598d1DCB993D29F55' //dev
+// 通过 USDT_NEW_PAIR 交易对获得new价格
+const USDT_WNEW_PAIR = '0x279677d9d2f4194428c9a39262129d870b5c5185'  // dev:0x279677d9d2f4194428c9a39262129d870b5c5185
 
 // const USDC_WETH_PAIR = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc' // created 10008355
 // const DAI_WETH_PAIR = '0xa478c2975ab1ea89e8196811f51a7b7ade33eb11' // created block 10042267
@@ -14,12 +17,18 @@ const PriceSource = '0x7419553C1342f4d47C2aAf8598d1DCB993D29F55'
 
 // dummy for testing
 export function getEthPriceInUSD(): BigDecimal {
-  let newPrice = fetchNewPrice(Address.fromString(NewPriceInUSDAddress), Address.fromString(PriceSource))
-  
-  return BigDecimal.fromString(newPrice.toString()).div(BigDecimal.fromString('1000000'))
-  
+  // 通过NewPriceOracle获得new的价格
+  // let newPrice = fetchNewPrice(Address.fromString(NewPriceInUSDAddress), Address.fromString(PriceSource))
+  // return BigDecimal.fromString(newPrice.toString()).div(BigDecimal.fromString('1000000'))
 
-  // return BigDecimal.fromString('1')
+  // 通过 USDT_NEW_PAIR 交易对获得new价格
+  let usdtPair = Pair.load(USDT_WNEW_PAIR)
+  if (usdtPair !== null) {
+    return usdtPair.token1Price   //TODO 确定token1Price还是token0Price
+  } else {
+    return ZERO_BD
+  }
+
   // let daiPair = Pair.load(DAI_WETH_PAIR) // dai is token0
   // let usdcPair = Pair.load(USDC_WETH_PAIR) // usdc is token0
   // let usdtPair = Pair.load(USDT_WETH_PAIR) // usdt is token1
