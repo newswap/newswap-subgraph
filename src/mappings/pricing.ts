@@ -4,7 +4,7 @@ import { BigDecimal, Address, BigInt, log } from '@graphprotocol/graph-ts/index'
 import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD, fetchNewPrice } from './helpers'
 
 // devnet:0x2678fb6e5af58f7b520ace2cd3a4f476b771c6f2
-//testnet: 0xf4905b9bc02ce21c98eac1803693a9357d5253bf
+//test/main: 0xf4905b9bc02ce21c98eac1803693a9357d5253bf
 const WETH_ADDRESS = '0xf4905b9bc02ce21c98eac1803693a9357d5253bf'  //必须全部小写
 
 // 通过NewPriceOracle获得new的价格
@@ -13,7 +13,8 @@ const PriceSource = '0x7419553C1342f4d47C2aAf8598d1DCB993D29F55' //dev
 // 通过 NUSD_NEW_PAIR 交易对获得new价格 
 // dev:0x279677d9d2f4194428c9a39262129d870b5c5185    usdt为token1
 // test: 0x56ae975581a382193ff36579c81281e179486c43  NUSDT为token0
-const USDT_WNEW_PAIR = '0x56ae975581a382193ff36579c81281e179486c43'
+// main: 0x0c0c1cfb948a75595b7d70703bf50190e62a2286  NUSDT为token0
+const USDT_WNEW_PAIR = '0x0c0c1cfb948a75595b7d70703bf50190e62a2286'  //小写
 
 // const USDC_WETH_PAIR = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc' // created 10008355
 // const DAI_WETH_PAIR = '0xa478c2975ab1ea89e8196811f51a7b7ade33eb11' // created block 10042267
@@ -25,7 +26,7 @@ export function getEthPriceInUSD(): BigDecimal {
   let usdtPair = Pair.load(USDT_WNEW_PAIR)
   if (usdtPair !== null) {
     // return usdtPair.token1Price   // devnet
-    return usdtPair.token0Price   // testnet
+    return usdtPair.token0Price   // test/main net
   } else {
     return ZERO_BD
   }
