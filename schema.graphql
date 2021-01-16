@@ -202,7 +202,6 @@ type Swap @entity {
 type Bundle @entity {
   id: ID!
   ethPrice: BigDecimal! # price of ETH usd
-  latestTimestamp: BigInt! # save latest Block timestamp
 }
 
 # Data accumulated and condensed into day stats for all of Uniswap
