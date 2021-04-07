@@ -8,6 +8,10 @@ import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD, fetchNewPrice } from '.
 //main: 0xf4905b9bc02ce21c98eac1803693a9357d5253bf
 const WETH_ADDRESS = '0x4438e9c8e0c9b209fa8b76c83f73a7d317de3c12'  //必须全部小写
 
+//test: 0xc01a73fbf1c1953d18b48518259b36d70b07f277
+//main: 0x4bfb4297f9c28a373ae6ae58a8f8efeff334cae8
+const NUSDT_ADDRESS = '0xc01a73fbf1c1953d18b48518259b36d70b07f277'  //必须全部小写
+
 // 通过NewPriceOracle获得new的价格
 const NewPriceInUSDAddress = '0x32f7bE067b0B557e1f5b6BD6D4D2B6d99E34f2A2'  //dev
 const PriceSource = '0x7419553C1342f4d47C2aAf8598d1DCB993D29F55' //dev
@@ -67,7 +71,8 @@ export function getEthPriceInUSD(): BigDecimal {
 
 // token where amounts should contribute to tracked volume and liquidity
 let WHITELIST: string[] = [
-  '0x4438e9c8e0c9b209fa8b76c83f73a7d317de3c12', // WETH   必须全部小写
+  WETH_ADDRESS, // WETH 
+  NUSDT_ADDRESS, // NUSDT
   // '0x6b175474e89094c44da98b954eedeac495271d0f', // DAI
   // '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', // USDC
   // '0xdac17f958d2ee523a2206206994597c13d831ec7', // USDT
